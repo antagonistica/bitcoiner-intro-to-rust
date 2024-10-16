@@ -6,7 +6,7 @@ Each input in a transaction contains the following information:
 * a ScriptSig (variable length preceded by compact size integer)
 * a sequence number (4 bytes length, represented as a u32 integer).
 
-The ScriptSig can be have variable length and so is preceded by a compact size integer which indicates the length of the field in bytes.
+The ScriptSig can have variable length and so is preceded by a compact size integer which indicates the length of the field in bytes.
 Prior to Segwit, the ScriptSig was where a digital signature would be provided for unlocking the funds of the referenced output (as indicated by the previous output txid and previous output index).
 Now, for Segwit transactions, this field is empty with a compact size length of 0x00 as the signature is no longer contained in the input data, but is instead "*segregated*" from the rest of the transaction in a separate witness field.
 For more information on SegWit, see [this section](https://github.com/bitcoinbook/bitcoinbook/blob/6d1c26e1640ae32b28389d5ae4caf1214c2be7db/ch06_transactions.adoc#segregated-witness) from Mastering Bitcoin, Chapter 6.
@@ -133,7 +133,7 @@ A vector would work just fine.
 But can we use it?
 Can we pass it into the `read` method as an argument?
 It turns out we can!
-In Rust, a Vec [implements the `DerefMut`](https://doc.rust-lang.org/src/alloc/vec/mod.rs.html#2769) trait which dereferences to a slice.
+In Rust, a Vec [implements the `DerefMut`](https://doc.rust-lang.org/src/alloc/vec/mod.rs.html#2827) trait which dereferences to a slice.
 So we can initialize a `Vec` filled with 0s of the size of the script and then pass that into the `read` method as a mutable reference (`&mut Vec<u8>`).
 It will then be dereferenced to a slice and match the correct argument type, which is `&mut [u8]`.
 
